@@ -56,6 +56,8 @@ setopt hist_ignore_dups
 # prompt pure
 export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.8/bin:$PATH"
 
+export EDITOR=vim
+
 setopt autocd
 
 # Setup asdf
@@ -71,7 +73,7 @@ source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring
 
 ## zsh-autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
+:
 ## zsh-syntax-highlighting
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -98,3 +100,5 @@ if [[ -n "$TMUX" ]]; then
 fi
 
 fpath=($fpath ~/.zsh/completion)
+
+alias gcd='cd `ghq root`/`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :100 $(ghq root)/{}/README.*"`'
