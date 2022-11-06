@@ -1,14 +1,29 @@
 #!/bin/bash
 
-if ! command -v brew > /dev/null 2>&1; then
-  echo "Installing homebrew"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# if ! command -v brew > /dev/null 2>&1; then
+#   echo "Installing homebrew"
+#   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# fi
+# 
+# if [ -f "$HOME/.Brewfile" ]; then
+#   echo "Updating homebrew bundle"
+#   brew bundle --global
+# fi
+
+if ! command -v curl > /dev/null 2>&1; then
+	echo "curl is not found. Please install curl"
+	exit 1
+fi
+ 
+if ! command -v git > /dev/null 2>&1; then
+	echo "git is not found. Please install git"
+	exit 1
 fi
 
-if [ -f "$HOME/.Brewfile" ]; then
-  echo "Updating homebrew bundle"
-  brew bundle --global
-fi
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
+. ~/.asdf/asdf.sh
 
+asdf plugin add ruby
+asdf install ruby latest
 

@@ -1,18 +1,18 @@
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+# eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # starship
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 
 # key bindings emacs mode
 bindkey -e
 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-
-  autoload -Uz compinit
-  compinit
-fi
+#if type brew &>/dev/null; then
+#  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+#  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+#
+#  autoload -Uz compinit
+#  compinit
+#fi
 
 #autoload -Uz vcs_info
 #setopt prompt_subst
@@ -54,14 +54,14 @@ setopt hist_ignore_dups
 
 # autoload -U promptinit; promptinit
 # prompt pure
-export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.8/bin:$PATH"
+#export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.8/bin:$PATH"
 
-export EDITOR=vim
+export EDITOR=vi
 
 setopt autocd
 
 # Setup asdf
-. $(brew --prefix asdf)/asdf.sh
+#. $(brew --prefix asdf)/asdf.sh
 
 # Setup direnv
 eval "$(direnv hook zsh)"
@@ -69,17 +69,17 @@ eval "$(direnv hook zsh)"
 # setup zsh utilities
 
 ## zsh-history-substring-search
-source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+# source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 ## zsh-autosuggestions
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 :
 ## zsh-syntax-highlighting
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # craete alias for cli tools
 alias ls='exa -l'
-alias cat='bat'
+# alias cat='bat'
 alias k='kubectl'
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -99,6 +99,6 @@ if [[ -n "$TMUX" ]]; then
   add-zsh-hook precmd _update_vscode_ipc_hook_cli
 fi
 
-fpath=($fpath ~/.zsh/completion)
+# fpath=($fpath ~/.zsh/completion)
 
 alias gcd='cd `ghq root`/`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :100 $(ghq root)/{}/README.*"`'
