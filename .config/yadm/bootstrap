@@ -21,11 +21,11 @@ if ! command -v git > /dev/null 2>&1; then
   exit 1
 fi
 
-if [ ! -d "${HOME}/opt/.asdf" ]; then
-  git clone https://github.com/asdf-vm/asdf.git ${HOME}/opt/.asdf --branch v0.10.2
+if [ ! -d "${HOME}/.asdf" ]; then
+  git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v0.10.2
 fi
 
-. ~/opt/.asdf/asdf.sh
+. ~/.asdf/asdf.sh
 
 plugins=(
   "ruby"
