@@ -61,7 +61,7 @@ export EDITOR=vi
 setopt autocd
 
 # Setup asdf
-#. $(brew --prefix asdf)/asdf.sh
+. ~/.asdf/asdf.sh
 
 # Setup direnv
 eval "$(direnv hook zsh)"
