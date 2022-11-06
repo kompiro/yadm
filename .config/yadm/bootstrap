@@ -42,6 +42,7 @@ plugins=(
 	"github-cli"
 	"jq"
 	"yq"
+	"starship"
 	)
 
 
