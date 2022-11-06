@@ -21,7 +21,7 @@ if ! command -v git > /dev/null 2>&1; then
   exit 1
 fi
 
-if [ ! -d "${HOME}/.asdf" ]; then
+if [ ! -e "${HOME}/.asdf/asdf.sh" ]; then
   git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v0.10.2
 fi
 
