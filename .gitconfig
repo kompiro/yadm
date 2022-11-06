@@ -9,8 +9,6 @@
   interactive = auto
   grep = auto
 [core]
-	excludesfile = /home/kompiro/.gitignore
-  editor = /usr/bin/vim
   quotepath = false
 [alias]
   st = status
@@ -83,9 +81,9 @@
   show-pr = !"f() { git log --merges --pretty=\"format:%ad %h %s\" --date=iso --reverse --ancestry-path $1...${2:-upstream/master} | grep 'Merge pull request #' | head -n 1; }; f"
 [push]
   default = current
-[url "ssh://git@github.com"]
-  insteadOf = https://github.com
+#[url "ssh://git@github.com"]
+#  insteadOf = https://github.com
 [ghq]
-	root = ~/work/src
+  root = ~/work/src
 [diff "sopsdiffer"]
-	textconv = sops -d
+  textconv = sops -d
