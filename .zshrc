@@ -1,7 +1,7 @@
 # eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # starship
-# eval "$(starship init zsh)"
+eval "$(starship init zsh)"
 
 # key bindings emacs mode
 bindkey -e
@@ -78,8 +78,6 @@ eval "$(direnv hook zsh)"
 # source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # craete alias for cli tools
-alias ls='exa -l'
-# alias cat='bat'
 alias k='kubectl'
 
 # The next line updates PATH for the Google Cloud SDK.

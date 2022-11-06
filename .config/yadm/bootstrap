@@ -49,3 +49,4 @@ for plugin in "${plugins[@]}" ; do
 	asdf plugin add ${plugin}
 done
 
+asdf install
