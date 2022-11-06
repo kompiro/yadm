@@ -39,6 +39,9 @@ plugins=(
 	"ripgrep"
 	"fzf"
 	"exa"
+	"github-cli"
+	"jq"
+	"yq"
 	)
 
 
