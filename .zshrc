@@ -1,8 +1,5 @@
 # eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
-# starship
-eval "$(starship init zsh)"
-
 # key bindings emacs mode
 bindkey -e
 
@@ -35,7 +32,6 @@ bindkey -e
 #
 #PROMPT='%F{green}%n@%m%f❯ '
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # 履歴ファイルの保存先
 export HISTFILE=${HOME}/.zsh_history
@@ -62,6 +58,11 @@ setopt autocd
 
 # Setup asdf
 . ~/.asdf/asdf.sh
+
+# starship
+eval "$(starship init zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Setup direnv
 eval "$(direnv hook zsh)"
