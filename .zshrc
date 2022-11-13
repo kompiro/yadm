@@ -103,3 +103,5 @@ fi
 # fpath=($fpath ~/.zsh/completion)
 
 alias gcd='cd `ghq root`/`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :100 $(ghq root)/{}/README.*"`'
+
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc" ]; then source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"; fi
