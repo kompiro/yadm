@@ -22,9 +22,10 @@ if ! command -v git > /dev/null 2>&1; then
 fi
 
 if [ ! -e "${HOME}/.asdf/asdf.sh" ]; then
-  git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf --branch v0.10.2
+  git clone https://github.com/asdf-vm/asdf.git "${HOME}"/.asdf --branch v0.14.0
 fi
 
+# shellcheck disable=SC1090
 . ~/.asdf/asdf.sh
 
 plugins=(
