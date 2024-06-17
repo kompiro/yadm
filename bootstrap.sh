@@ -2,5 +2,5 @@
 
 set -eux
 
-yadm clone https://github.com/kompiro/yadm/ --bootstrap &
+yadm clone https://github.com/kompiro/yadm/ --no-bootstrap
 
