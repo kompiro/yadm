@@ -87,3 +87,5 @@
   root = ~/work/src
 [diff "sopsdiffer"]
   textconv = sops -d
+[advice]
+  detachedHead = false
