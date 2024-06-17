@@ -46,6 +46,8 @@ plugins=(
   "jq"
   "yq"
   "starship"
+  "github-cli"
+  "terraform"
   )
 
 
