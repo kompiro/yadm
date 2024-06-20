@@ -1,0 +1,12 @@
+// For format details, see https://containers.dev
+{
+    "name": "kompiro devcontainer dev",
+    "build":{
+        "dockerfile": "Dockerfile"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2.11.0": {},
+        "./local-features/yadm": {}
+    },
+    "remoteUser": "vscode"
+}
