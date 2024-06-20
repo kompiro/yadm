@@ -1,0 +1,13 @@
+{
+    "name": "Setup dotfiles using yadm",
+    "id": "yadm",
+    "version": "1.0.0",
+    "description": "Setup dotfiles using yadm",
+    "options": {
+        "url": {
+            "type": "string",
+            "default": "https://github.com/kompiro/yadm",
+            "description": "Setup your yadm repository URL."
+        }
+    }
+}
