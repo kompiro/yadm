@@ -89,5 +89,3 @@
   textconv = sops -d
 [advice]
   detachedHead = false
-[credential]
-	helper = "!f() { /home/vscode/.vscode-server/bin/611f9bfce64f25108829dd295f54a6894e87339d/node /tmp/vscode-remote-containers-8586a93e-4780-4916-ade0-52e54ceccf6c.js git-credential-helper $*; }; f"
