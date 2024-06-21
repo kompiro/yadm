@@ -34,7 +34,7 @@ bindkey -e
 
 
 # 履歴ファイルの保存先
-export HISTFILE=${HOME}/.zsh_history
+export HISTFILE=$HOME/.history/.zsh_history
 
 # メモリに保存される履歴の件数
 export HISTSIZE=1000
@@ -44,6 +44,20 @@ export SAVEHIST=100000
 
 # 重複を記録しない
 setopt hist_ignore_dups
+
+## コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
+setopt hist_ignore_space
+## history (fc -l) コマンドをヒストリリストから取り除く。
+setopt hist_no_store
+## 余分な空白は詰めて記録
+setopt hist_reduce_blanks
+
+## シェルを横断して.zsh_historyに記録
+setopt inc_append_history
+
+## ヒストリを共有
+setopt share_history
+
 
 ## Setup pure https://github.com/sindresorhus/pure
 #fpath+=$HOME/.zsh/pure
