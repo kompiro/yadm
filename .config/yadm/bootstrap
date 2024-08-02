@@ -56,3 +56,13 @@ for plugin in "${plugins[@]}" ; do
 done
 
 asdf install
+
+# install github cli extensions
+github_cli_extensions=(
+  "seachicken/gh-poi"
+  "nektos/gh-act"
+)
+
+for ext in "${github_cli_extensions[@]}" ; do
+  gh ext install ${ext}
+done
