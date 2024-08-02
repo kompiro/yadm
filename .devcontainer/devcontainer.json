@@ -5,7 +5,6 @@
         "dockerfile": "Dockerfile"
     },
     "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2.11.0": {},
         "./local-features/yadm": {}
     },
     "remoteUser": "vscode"
