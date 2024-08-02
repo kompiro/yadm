@@ -68,5 +68,5 @@ github_cli_extensions=(
 )
 
 for ext in "${github_cli_extensions[@]}" ; do
-  gh ext install ${ext}
+  gh ext install "https://github.com/${ext}"
 done
