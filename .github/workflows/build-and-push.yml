@@ -32,7 +32,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
       - name: Extract ref name
         id: extract_ref
-        run: echo "REF_NAME=${{ github.ref }}" | sed 's|.*/||' >> $GITHUB_ENV
+        run: echo "REF_NAME=$(echo ${{ github.ref }} | sed 's|.*/||')" >> $GITHUB_ENV
         if: ${{ github.event_name == 'push' }}
       - name: Set latest tag for main branch
         if: ${{ github.ref == 'refs/heads/main' }}
