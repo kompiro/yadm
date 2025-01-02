@@ -1,11 +1,12 @@
 // For format details, see https://containers.dev
 {
     "name": "kompiro devcontainer dev",
-    "build":{
+    "build": {
         "dockerfile": "Dockerfile"
     },
     "features": {
         "./local-features/yadm": {}
     },
-    "remoteUser": "vscode"
+    "remoteUser": "vscode",
+    "updateContentCommand": "gh extension install seachicken/gh-poi"
 }

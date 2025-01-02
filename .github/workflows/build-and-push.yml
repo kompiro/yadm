@@ -39,12 +39,10 @@ jobs:
         run: echo "REF_NAME=latest" >> $GITHUB_ENV
       - name: Pre-build dev container image
         uses: devcontainers/ci@v0.3
-        env:
-          TEST_MESSAGE: "This is a test message"
         with:
           imageName: ghcr.io/${{ github.repository }}
           cacheFrom: ghcr.io/${{ github.repository }}
           imageTag: ${{ env.BRANCH_NAME || env.REF_NAME }}
           push: always
           noCache: true
-          env: TEST_MESSAGE=${{ github.token }}
+          env: GH_TOKEN=${{ github.token }}
