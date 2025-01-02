@@ -31,5 +31,6 @@ jobs:
         with:
           imageName: ghcr.io/${{ github.repository }}
           cacheFrom: ghcr.io/${{ github.repository }}
+          imageTag: ${{ github.event.pull_request.head.ref || github.ref }}
           push: always
           noCache: true
