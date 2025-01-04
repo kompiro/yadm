@@ -37,7 +37,11 @@ jobs:
       - name: Set latest tag for main branch
         if: ${{ github.ref == 'refs/heads/main' }}
         run: echo "REF_NAME=latest" >> $GITHUB_ENV
-      - name: Pre-build dev container image
+      - name: Install gh extensions
+        run: gh extension install seachicken/gh-poi
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Build dev container image
         uses: devcontainers/ci@v0.3
         with:
           imageName: ghcr.io/${{ github.repository }}
@@ -45,4 +49,3 @@ jobs:
           imageTag: ${{ env.BRANCH_NAME || env.REF_NAME }}
           push: always
           noCache: true
-          env: GH_TOKEN=${{ github.token }}
