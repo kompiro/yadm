@@ -66,7 +66,7 @@ setopt share_history
 # prompt pure
 #export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.8/bin:$PATH"
 
-export EDITOR=vi
+export EDITOR=nvim
 
 setopt autocd
 
