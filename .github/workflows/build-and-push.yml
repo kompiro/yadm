@@ -38,7 +38,10 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         run: echo "REF_NAME=latest" >> $GITHUB_ENV
       - name: Install gh extensions
-        run: gh extension install seachicken/gh-poi
+        run: |
+          gh extension install seachicken/gh-poi
+          ls ~/.local/share/gh/extensions
+          echo $HOME
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Build dev container image
