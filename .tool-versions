@@ -5,5 +5,6 @@ fzf 0.53.0
 starship 1.19.0
 exa 0.10.1
 neovim stable
-github-cli 2.54.0
+github-cli 2.64.0
 terraform 1.8.5
+awscli 2.15.53
