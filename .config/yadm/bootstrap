@@ -52,6 +52,7 @@ plugins=(
   "starship"
   "github-cli"
   "terraform"
+  "awscli"
   )
 
 
