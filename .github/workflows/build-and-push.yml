@@ -45,3 +45,5 @@ jobs:
           imageTag: ${{ env.BRANCH_NAME || env.REF_NAME }}
           push: always
           noCache: true
+          env: |
+            REF="${{ env.BRANCH_NAME || env.REF_NAME }}"
