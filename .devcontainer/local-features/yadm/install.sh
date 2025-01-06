@@ -3,7 +3,10 @@
 set -ex
 
 URL=${URL:-"https://github.com/kompiro/yadm"}
+REF=${REF:-"main"}
 
 su - "$_REMOTE_USER" <<EOF
-yadm clone $URL --bootstrap
+echo "URL:$URL"
+echo "REF:$REF"
+yadm clone $URL --bootstrap -b $REF
 EOF

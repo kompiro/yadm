@@ -28,7 +28,9 @@ jobs:
           password: ${{ github.token }}
       - name: Extract branch name
         id: extract_branch
-        run: echo "BRANCH_NAME=${GITHUB_HEAD_REF##*/}" >> $GITHUB_ENV
+        run: |
+          echo "BRANCH_NAME=${GITHUB_HEAD_REF##*/}" >> $GITHUB_ENV
+          echo "REF=$(echo ${GITHUB_HEAD_REF})" >> $GITHUB_ENV
         if: ${{ github.event_name == 'pull_request' }}
       - name: Extract ref name
         id: extract_ref

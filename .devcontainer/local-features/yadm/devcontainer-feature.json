@@ -8,6 +8,11 @@
             "type": "string",
             "default": "https://github.com/kompiro/yadm",
             "description": "Setup your yadm repository URL."
+        },
+        "ref": {
+            "type": "string",
+            "default": "main",
+            "description": "Setup your yadm repository ref."
         }
     }
 }

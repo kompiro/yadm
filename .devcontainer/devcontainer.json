@@ -5,7 +5,12 @@
         "dockerfile": "Dockerfile"
     },
     "features": {
-        "./local-features/yadm": {}
+        "./local-features/yadm": {
+            "ref": "${localEnv:REF}"
+        }
     },
-    "remoteUser": "vscode"
+    "remoteUser": "vscode",
+    "remoteEnv": {
+        "ref": "${localEnv:REF}"
+    }
 }

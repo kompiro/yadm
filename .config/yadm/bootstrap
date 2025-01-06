@@ -36,7 +36,6 @@ plugins=(
   "ruby"
   "nodejs"
   "direnv"
-  "bat"
   "ghq"
   "tmux"
   "neovim"
