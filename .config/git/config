@@ -93,7 +93,7 @@
   defaultBranch = main
 [credential "https://github.com"]
   helper =
-  helper = !/home/kompiro/.asdf/installs/github-cli/2.64.0/bin/gh auth git-credential
+  helper = !$HOME/.asdf/installs/github-cli/2.64.0/bin/gh auth git-credential
 [credential "https://gist.github.com"]
   helper =
-  helper = !/home/kompiro/.asdf/installs/github-cli/2.64.0/bin/gh auth git-credential
+  helper = !$HOME/.asdf/installs/github-cli/2.64.0/bin/gh auth git-credential
