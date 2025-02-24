@@ -8,3 +8,4 @@ github-cli 2.64.0
 terraform 1.8.5
 awscli 2.15.53
 eza 0.20.20
+golang 1.24.0
