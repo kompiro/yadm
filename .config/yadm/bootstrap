@@ -52,6 +52,7 @@ plugins=(
   "github-cli"
   "terraform"
   "awscli"
+  "task"
   )
 
 
