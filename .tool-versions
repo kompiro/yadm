@@ -9,3 +9,4 @@ terraform 1.8.5
 awscli 2.15.53
 eza 0.20.20
 golang 1.24.0
+task 3.43.3
