@@ -33,8 +33,13 @@ fi
 
 # ~/.bashrc はディストリビューションが最初から置いていて yadm では上書きできないので、
 # yadm で管理している ~/.config/bash/bashrc を読み込む行を追記する
-bashrc_source='[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bashrc"'
+# yadm は $HOME 直下にチェックアウトするので、XDG_CONFIG_HOME ではなく $HOME/.config を参照する
+bashrc_source='[ -f "$HOME/.config/bash/bashrc" ] && . "$HOME/.config/bash/bashrc"'
 if ! grep -qxF "${bashrc_source}" "${HOME}/.bashrc" 2>/dev/null; then
+  # 末尾が改行で終わっていないと直前の行に連結されてしまうので、改行を補ってから追記する
+  if [ -s "${HOME}/.bashrc" ] && [ -n "$(tail -c 1 "${HOME}/.bashrc")" ]; then
+    echo >> "${HOME}/.bashrc"
+  fi
   echo "${bashrc_source}" >> "${HOME}/.bashrc"
 fi
 
