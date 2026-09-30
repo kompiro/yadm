@@ -15,8 +15,21 @@ case ":${PATH}:" in
 esac
 
 # Setup asdf
-# shellcheck disable=SC1091
-[ -f "${HOME}/.asdf/asdf.sh" ] && . "${HOME}/.asdf/asdf.sh"
+# asdf.sh は shims を PATH の先頭に入れるが、ここでは末尾に回す。
+# コンテナではプロジェクト側がツールの版を固定していることがあるので、
+# 環境に既にあるものを優先し、asdf は無いものを補う
+if [ -f "${HOME}/.asdf/asdf.sh" ]; then
+  # shellcheck disable=SC1091
+  . "${HOME}/.asdf/asdf.sh"
+  for dir in "${ASDF_DIR}/bin" "${ASDF_DATA_DIR:-${HOME}/.asdf}/shims"; do
+    PATH=":${PATH}:"
+    PATH="${PATH//:${dir}:/:}"
+    PATH="${PATH#:}"
+    PATH="${PATH%:}:${dir}"
+  done
+  unset dir
+  export PATH
+fi
 # shellcheck disable=SC1091
 [ -f "${HOME}/.asdf/completions/asdf.bash" ] && . "${HOME}/.asdf/completions/asdf.bash"
 

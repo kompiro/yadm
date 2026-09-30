@@ -39,7 +39,7 @@ if ! grep -qxF "${bashrc_source}" "${HOME}/.bashrc" 2>/dev/null; then
 fi
 
 # `git config --global` の書き込み先は、~/.gitconfig が無いと ~/.config/git/config (yadm で管理) になる。
-# devcontainer では VSCode や postStartCommand がそこに credential helper や include を足すので、
+# コンテナでは初期化処理がそこに credential helper や include を足すことがあるので、
 # yadm の作業ツリーが汚れないよう空の ~/.gitconfig を用意して書き込み先をそちらに寄せる
 touch "${HOME}/.gitconfig"
 
