@@ -1,0 +1,39 @@
+# shellcheck shell=bash
+# bash 用の設定。.zshrc と同じ内容を bash で使えるものに絞って書いている。
+# ~/.bashrc はディストリビューションが最初から置いていて yadm では上書きできないため、
+# yadm の bootstrap が ~/.bashrc の末尾にこのファイルを読み込む行を追記する
+
+case $- in
+  *i*) ;;
+  *) return ;;
+esac
+
+# bootstrap.sh が yadm を置く場所
+case ":${PATH}:" in
+  *":${HOME}/.local/bin:"*) ;;
+  *) export PATH="${HOME}/.local/bin:${PATH}" ;;
+esac
+
+# Setup asdf
+# shellcheck disable=SC1091
+[ -f "${HOME}/.asdf/asdf.sh" ] && . "${HOME}/.asdf/asdf.sh"
+# shellcheck disable=SC1091
+[ -f "${HOME}/.asdf/completions/asdf.bash" ] && . "${HOME}/.asdf/completions/asdf.bash"
+
+if command -v nvim > /dev/null 2>&1; then
+  export EDITOR=nvim
+  alias vi='nvim'
+fi
+
+# starship
+command -v starship > /dev/null 2>&1 && eval "$(starship init bash)"
+
+# fzf (0.48 以降は --bash で補完とキーバインドを出力できる)
+command -v fzf > /dev/null 2>&1 && eval "$(fzf --bash)"
+
+# Setup direnv
+command -v direnv > /dev/null 2>&1 && eval "$(direnv hook bash)"
+
+# craete alias for cli tools
+alias k='kubectl'
+alias gcd='cd `ghq root`/`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :100 $(ghq root)/{}/README.*"`'

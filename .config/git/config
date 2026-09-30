@@ -91,9 +91,12 @@
   detachedHead = false
 [init]
   defaultBranch = main
+# gh は PATH 上のものを使い、見つからなければ asdf の shim を使う。
+# 版を埋め込んだパスだと、asdf で入れていない環境 (devcontainer など) や gh の更新後に壊れるため。
+# PATH が通っていない GUI アプリから呼ばれたときのために shim へのフォールバックを残している
 [credential "https://github.com"]
   helper =
-  helper = !$HOME/.asdf/installs/github-cli/2.64.0/bin/gh auth git-credential
+  helper = "!f() { if command -v gh > /dev/null 2>&1; then gh auth git-credential \"$@\"; elif [ -x \"$HOME/.asdf/shims/gh\" ]; then \"$HOME/.asdf/shims/gh\" auth git-credential \"$@\"; fi; }; f"
 [credential "https://gist.github.com"]
   helper =
-  helper = !$HOME/.asdf/installs/github-cli/2.64.0/bin/gh auth git-credential
+  helper = "!f() { if command -v gh > /dev/null 2>&1; then gh auth git-credential \"$@\"; elif [ -x \"$HOME/.asdf/shims/gh\" ]; then \"$HOME/.asdf/shims/gh\" auth git-credential \"$@\"; fi; }; f"
