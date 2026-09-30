@@ -21,9 +21,32 @@ if ! command -v git > /dev/null 2>&1; then
   exit 1
 fi
 
+# asdf の ghq / terraform / awscli プラグインは zip を展開するので unzip が要る。
+# devcontainer のイメージには入っていないことが多いので、root で apt が使えるなら入れる
+if ! command -v unzip > /dev/null 2>&1 && [ "$(id -u)" = 0 ] && command -v apt-get > /dev/null 2>&1; then
+  apt-get update && apt-get install -y --no-install-recommends unzip
+fi
+
 if [ ! -e "${HOME}/.history" ]; then
   mkdir -p "${HOME}/.history"
 fi
+
+# ~/.bashrc はディストリビューションが最初から置いていて yadm では上書きできないので、
+# yadm で管理している ~/.config/bash/bashrc を読み込む行を追記する
+# yadm は $HOME 直下にチェックアウトするので、XDG_CONFIG_HOME ではなく $HOME/.config を参照する
+bashrc_source='[ -f "$HOME/.config/bash/bashrc" ] && . "$HOME/.config/bash/bashrc"'
+if ! grep -qxF "${bashrc_source}" "${HOME}/.bashrc" 2>/dev/null; then
+  # 末尾が改行で終わっていないと直前の行に連結されてしまうので、改行を補ってから追記する
+  if [ -s "${HOME}/.bashrc" ] && [ -n "$(tail -c 1 "${HOME}/.bashrc")" ]; then
+    echo >> "${HOME}/.bashrc"
+  fi
+  echo "${bashrc_source}" >> "${HOME}/.bashrc"
+fi
+
+# `git config --global` の書き込み先は、~/.gitconfig が無いと ~/.config/git/config (yadm で管理) になる。
+# コンテナでは初期化処理がそこに credential helper や include を足すことがあるので、
+# yadm の作業ツリーが汚れないよう空の ~/.gitconfig を用意して書き込み先をそちらに寄せる
+touch "${HOME}/.gitconfig"
 
 if [ ! -e "${HOME}/.asdf/asdf.sh" ]; then
   git clone https://github.com/asdf-vm/asdf.git "${HOME}"/.asdf --branch v0.14.0
@@ -60,4 +83,16 @@ for plugin in "${plugins[@]}" ; do
   asdf plugin add ${plugin}
 done
 
-asdf install
+# `asdf install` は最初に失敗したツールで止まり、残りが入らない。
+# devcontainer のイメージによっては依存コマンド (awscli の unzip など) が無いので、
+# 1 つずつ入れて失敗したものだけ最後に報告する
+failed=()
+while read -r tool version _; do
+  case "${tool}" in ""|\#*) continue ;; esac
+  asdf install "${tool}" "${version}" || failed+=("${tool}")
+done < "${HOME}/.tool-versions"
+
+if [ "${#failed[@]}" -gt 0 ]; then
+  echo "asdf install に失敗しました: ${failed[*]}" >&2
+  exit 1
+fi
