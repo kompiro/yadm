@@ -1,0 +1,25 @@
+# mise のグローバル設定。ここに書いたツールはどのディレクトリでも使える。
+# プロジェクトに mise.toml や .tool-versions があれば、そちらの版が優先される。
+#
+# 版の更新:
+#   mise outdated --bump   # 新しい版があるツールを一覧する
+#   mise upgrade --bump    # 全ツールを最新に上げ、このファイルの版も書き換える
+#   mise use -g fzf@latest # 1 つだけ上げる
+
+[settings]
+# 公開から 7 日経っていない版は選ばない (サプライチェーン対策)。
+# `mise upgrade --bump` や `@latest` の解決に効く
+minimum_release_age = "7d"
+
+[tools]
+direnv = "2.34.0"
+ghq = "1.6.1"
+ripgrep = "15.2.0"
+fzf = "0.74.4"
+starship = "1.26.0"
+neovim = "stable"
+github-cli = "2.102.0"
+terraform = "1.8.5"
+awscli = "2.15.53"
+eza = "0.20.20"
+task = "3.43.3"
