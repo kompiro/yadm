@@ -98,7 +98,8 @@ cdwt() {
     esac
   fi
   target=$(printf '%s\n' "${candidates}" | fzf --height=40% --reverse --query="${1-}") || return
-  [ -n "${target}" ] && cd "${wt_dir}/${target}"
+  [ -n "${target}" ] || return
+  cd "${wt_dir}/${target}" || return
 }
 
 # 補完: サブコマンドと worktree 名を候補に出す
@@ -107,6 +108,8 @@ if [ -n "${ZSH_VERSION-}" ]; then
     local root
     root=$(_cdwt_root) || return 1
     (( CURRENT == 2 )) || return 1
+    # worktree 名は 1 行に 1 つなので、改行で分割させる
+    # shellcheck disable=SC2046
     compadd -- list help $(_cdwt_list "${root}")
   }
   # compdef は compinit の後でないと使えない
