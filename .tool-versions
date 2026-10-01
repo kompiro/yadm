@@ -1,10 +1,10 @@
 direnv 2.34.0
 ghq 1.6.1
-ripgrep 14.1.0
-fzf 0.53.0
-starship 1.19.0
+ripgrep 15.2.0
+fzf 0.74.4
+starship 1.26.0
 neovim stable
-github-cli 2.64.0
+github-cli 2.102.0
 terraform 1.8.5
 awscli 2.15.53
 eza 0.20.20
