@@ -13,6 +13,6 @@ if ! command -v yadm > /dev/null 2>&1; then
   export PATH="${HOME}/.local/bin:${PATH}"
 fi
 
-# clone 後に ~/.config/yadm/bootstrap (asdf のツール導入や ~/.bashrc の設定) まで実行する。
+# clone 後に ~/.config/yadm/bootstrap (mise のツール導入や ~/.bashrc の設定) まで実行する。
 # 非対話で実行されるので、確認プロンプトを出さないよう --bootstrap を明示する
 yadm clone https://github.com/kompiro/yadm/ --bootstrap

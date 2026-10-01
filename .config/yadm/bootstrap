@@ -21,12 +21,6 @@ if ! command -v git > /dev/null 2>&1; then
   exit 1
 fi
 
-# asdf の ghq / terraform / awscli プラグインは zip を展開するので unzip が要る。
-# devcontainer のイメージには入っていないことが多いので、root で apt が使えるなら入れる
-if ! command -v unzip > /dev/null 2>&1 && [ "$(id -u)" = 0 ] && command -v apt-get > /dev/null 2>&1; then
-  apt-get update && apt-get install -y --no-install-recommends unzip
-fi
-
 if [ ! -e "${HOME}/.history" ]; then
   mkdir -p "${HOME}/.history"
 fi
@@ -48,51 +42,14 @@ fi
 # yadm の作業ツリーが汚れないよう空の ~/.gitconfig を用意して書き込み先をそちらに寄せる
 touch "${HOME}/.gitconfig"
 
-if [ ! -e "${HOME}/.asdf/asdf.sh" ]; then
-  git clone https://github.com/asdf-vm/asdf.git "${HOME}"/.asdf --branch v0.14.0
+# mise 本体は ~/.local/bin/mise に置く。版は固定し、上げるときは `mise self-update` を使う。
+# インストーラはダウンロードした tarball を、その版のリリースに載っている SHA256 と照合する
+mise_version="v2026.9.12"
+mise_bin="${HOME}/.local/bin/mise"
+if [ ! -x "${mise_bin}" ]; then
+  curl -fsSL https://mise.run | MISE_VERSION="${mise_version}" MISE_INSTALL_PATH="${mise_bin}" sh
 fi
 
-# shellcheck disable=SC1090
-. ~/.asdf/asdf.sh
-
-plugins=(
-  "ruby"
-  "nodejs"
-  "direnv"
-  "ghq"
-  "tmux"
-  "neovim"
-  "golang"
-  "sops"
-  "saml2aws"
-  "shellcheck"
-  "ripgrep"
-  "fzf"
-  "eza"
-  "jq"
-  "yq"
-  "starship"
-  "github-cli"
-  "terraform"
-  "awscli"
-  "task"
-  )
-
-
-for plugin in "${plugins[@]}" ; do
-  asdf plugin add ${plugin}
-done
-
-# `asdf install` は最初に失敗したツールで止まり、残りが入らない。
-# devcontainer のイメージによっては依存コマンド (awscli の unzip など) が無いので、
-# 1 つずつ入れて失敗したものだけ最後に報告する
-failed=()
-while read -r tool version _; do
-  case "${tool}" in ""|\#*) continue ;; esac
-  asdf install "${tool}" "${version}" || failed+=("${tool}")
-done < "${HOME}/.tool-versions"
-
-if [ "${#failed[@]}" -gt 0 ]; then
-  echo "asdf install に失敗しました: ${failed[*]}" >&2
-  exit 1
-fi
+# ~/.config/mise/config.toml に書いたツールを入れる。
+# mise は zip も自前で展開するので、asdf のときのように unzip を入れておく必要はない
+"${mise_bin}" install

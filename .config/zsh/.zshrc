@@ -70,13 +70,22 @@ export EDITOR=nvim
 
 setopt autocd
 
-# Setup asdf
-. ~/.asdf/asdf.sh
+# mise 本体は ~/.local/bin に入る
+path=("$HOME/.local/bin" $path)
+
+# Setup mise
+# shims を PATH の先頭に入れる。ツールの版は ~/.config/mise/config.toml か、
+# プロジェクトの mise.toml / .tool-versions で決まる
+path=("${MISE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/mise}/shims" $path)
+typeset -U path
 
 # starship
 eval "$(starship init zsh)"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf (0.48 以降は --zsh で補完とキーバインドを出力できる)
+if command -v fzf > /dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 
 # Setup direnv
 eval "$(direnv hook zsh)"
@@ -116,7 +125,5 @@ fi
 # fpath=($fpath ~/.zsh/completion)
 
 alias gcd='cd `ghq root`/`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :100 $(ghq root)/{}/README.*"`'
-
-if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc" ]; then source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"; fi
 
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
