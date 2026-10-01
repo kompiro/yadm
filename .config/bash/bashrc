@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# bash 用の設定。.zshrc と同じ内容を bash で使えるものに絞って書いている。
+# bash 用の設定。~/.config/zsh/.zshrc と同じ内容を bash で使えるものに絞って書いている。
 # ~/.bashrc はディストリビューションが最初から置いていて yadm では上書きできないため、
 # yadm の bootstrap が ~/.bashrc の末尾にこのファイルを読み込む行を追記する
 
