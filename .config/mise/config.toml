@@ -20,6 +20,8 @@ starship = "1.26.0"
 neovim = "stable"
 github-cli = "2.102.0"
 terraform = "1.16.4"
-awscli = { version = "2.37.7", symlink_bins = "true" }
+# aws-cli は GitHub Releases を作らずタグだけを打つので、mise が公開日時を取れず
+# minimum_release_age が効かない。bump したら公開から 7 日経っているかタグの日時で確かめる
+awscli = { version = "2.37.1", symlink_bins = "true" }
 eza = "0.23.5"
 task = "3.53.1"
