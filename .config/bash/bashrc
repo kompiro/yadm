@@ -46,4 +46,4 @@ alias k='kubectl'
 alias gcd='cd `ghq root`/`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :100 $(ghq root)/{}/README.*"`'
 
 # .claude/worktrees/ 配下の worktree とプロジェクトルートを行き来する
-[ -f "${HOME}/.config/shell/cd-wt.sh" ] && . "${HOME}/.config/shell/cd-wt.sh"
+[ -f "${HOME}/.config/shell/cdwt.sh" ] && . "${HOME}/.config/shell/cdwt.sh"

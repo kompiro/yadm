@@ -129,4 +129,4 @@ alias gcd='cd `ghq root`/`ghq list | fzf --preview "bat --color=always --style=h
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
 # .claude/worktrees/ 配下の worktree とプロジェクトルートを行き来する
-[ -f "$HOME/.config/shell/cd-wt.sh" ] && . "$HOME/.config/shell/cd-wt.sh"
+[ -f "$HOME/.config/shell/cdwt.sh" ] && . "$HOME/.config/shell/cdwt.sh"
