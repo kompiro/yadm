@@ -20,7 +20,7 @@ _cdwt_root() {
   esac
 }
 
-# .claude/worktrees/ 配下の worktree を、そこからの相対パス (= ブランチ名) で列挙する
+# .claude/worktrees/ 配下の worktree を、そこからの相対パスで列挙する
 _cdwt_list() {
   local root=$1
   git -C "${root}" worktree list --porcelain |
@@ -85,7 +85,9 @@ cdwt() {
         return
         ;;
     esac
-  elif [ -d "${wt_dir}/$1" ]; then
+  elif _cdwt_list "${root}" | grep -Fxq -- "$1"; then
+    # worktree はブランチの接頭辞ごとに入れ子になる (feat/xxx) ので、ディレクトリの有無ではなく
+    # 登録済みの worktree 名と比べる。`cdwt feat` を親ディレクトリへの移動にせず、あいまい検索へ回す
     cd "${wt_dir}/$1" || return
     return
   fi
