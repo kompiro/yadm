@@ -28,3 +28,5 @@ task = "3.53.1"
 # git の diff 表示用 (設定は ~/.config/git/config)
 delta = "0.19.2"
 difftastic = "0.71.0"
+# delta の pager (設定は ~/.config/zsh/.zshrc と ~/.config/bash/bashrc の DELTA_PAGER)
+"aqua:noborus/ov" = "0.54.0"
