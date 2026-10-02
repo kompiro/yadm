@@ -79,10 +79,15 @@ path=("$HOME/.local/bin" $path)
 path=("${MISE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/mise}/shims" $path)
 typeset -U path
 
-# delta の pager を ov にする。ov が無い環境 (devcontainer など) では delta 既定の less を使う。
-# delta の navigate = true が付ける見出し (Δ / added: など) をファイル単位の区切りにし、
-# 区切りの行を画面上部に固定する。hunk の見出し (•) は検索の対象にしてジャンプしやすくする
+# pager を ov にする。ov が無い環境 (devcontainer など) では less のまま。
+# PAGER は短い出力を画面に残したいツールからも使われるので -F (1 画面なら終了) を付けない。
+# man も MANPAGER が無ければ PAGER を使うので ov になる
+#
+# delta の pager は DELTA_PAGER で別に指定する。delta の navigate = true が付ける見出し
+# (Δ / added: など) をファイル単位の区切りにし、区切りの行を画面上部に固定する。
+# hunk の見出し (•) は検索の対象にしてジャンプしやすくする
 if command -v ov > /dev/null 2>&1; then
+  export PAGER=ov
   export DELTA_PAGER="ov -F --section-delimiter '^(commit|added:|removed:|renamed:|Δ)' --section-header --pattern '•'"
 fi
 
