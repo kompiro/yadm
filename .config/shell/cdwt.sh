@@ -8,6 +8,7 @@
 #                   完全一致が無ければ <name> であいまい検索し、複数あれば fzf で選ぶ
 #   cdwt list      worktree を一覧する
 #   cdwt help      使い方を表示する
+#   Alt+W          fzf でプロジェクトルートか worktree を選んで移動する (Ctrl+R のようなキー操作)
 
 # 今いる worktree から見たメインの作業ツリー (プロジェクトルート) を返す
 _cdwt_root() {
@@ -26,6 +27,20 @@ _cdwt_list() {
     sed -n "s|^worktree ${root}/\.claude/worktrees/||p"
 }
 
+# fzf でプロジェクトルートか worktree を選び、その絶対パスを返す
+_cdwt_pick() {
+  local root target
+  root=$(_cdwt_root) || return 1
+  target=$({
+    printf '%s\n' '(root)'
+    _cdwt_list "${root}"
+  } | fzf --height=40% --reverse --prompt='worktree> ' --header="${root}") || return
+  case "${target}" in
+    '(root)') printf '%s\n' "${root}" ;;
+    *) printf '%s\n' "${root}/.claude/worktrees/${target}" ;;
+  esac
+}
+
 _cdwt_help() {
   cat << 'EOF'
 使い方: cdwt [<name> | list | help]
@@ -39,6 +54,7 @@ _cdwt_help() {
   cdwt help      この使い方を表示する (-h / --help も可)
 
 <name> と list は Tab で補完できる。
+Alt+W を押すと、プロジェクトルートと worktree を fzf で選んで移動できる。
 EOF
 }
 
@@ -125,4 +141,53 @@ elif [ -n "${BASH_VERSION-}" ]; then
     COMPREPLY=($(compgen -W "list help $(_cdwt_list "${root}")" -- "${COMP_WORDS[COMP_CWORD]}"))
   }
   complete -F _cdwt_complete cdwt
+fi
+
+# Alt+W: fzf で選んだ先へ移動する。fzf の Alt+C と同じく cd の行を実行させるので、
+# プロンプトの再描画 (starship) や direnv の切り替えが通常の cd と同じように効き、履歴にも残る
+case $- in
+  *i*) ;;
+  *) return 0 ;;
+esac
+if [ -n "${ZSH_VERSION-}" ]; then
+  _cdwt_widget() {
+    local dir
+    if ! _cdwt_root > /dev/null; then
+      zle -M "cdwt: git リポジトリの中で実行してください"
+      return 1
+    fi
+    dir=$(_cdwt_pick)
+    if [ -z "${dir}" ]; then
+      zle redisplay
+      return 0
+    fi
+    # 入力途中の行は退避し、次のプロンプトで戻す
+    zle push-line
+    # BUFFER は zle の編集中の行
+    # shellcheck disable=SC2034
+    BUFFER="builtin cd -- $(printf '%q' "${dir}")"
+    zle accept-line
+    local ret=$?
+    zle reset-prompt
+    return "${ret}"
+  }
+  zle -N _cdwt_widget
+  bindkey '\ew' _cdwt_widget
+elif [ -n "${BASH_VERSION-}" ]; then
+  # bind -x の関数からは行を実行できないので、Alt+W を「\C-x\C-w (選ぶ) → \C-x\C-v (実行)」の
+  # 2 段のマクロにする。\C-x\C-v には選んだときだけ accept-line を割り当て、
+  # キャンセルしたときは入力途中の行を実行しないよう再描画だけにする
+  _cdwt_widget() {
+    local dir
+    dir=$(_cdwt_pick)
+    if [ -n "${dir}" ]; then
+      READLINE_LINE="builtin cd -- $(printf '%q' "${dir}")"
+      READLINE_POINT=${#READLINE_LINE}
+      bind -m emacs-standard '"\C-x\C-v": accept-line'
+    else
+      bind -m emacs-standard '"\C-x\C-v": redraw-current-line'
+    fi
+  }
+  bind -m emacs-standard -x '"\C-x\C-w": _cdwt_widget'
+  bind -m emacs-standard '"\ew": "\C-x\C-w\C-x\C-v"'
 fi
