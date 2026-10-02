@@ -1,0 +1,17 @@
+# ov の設定。macOS では XDG_CONFIG_HOME が無くても ~/.config/ov/config.yaml を読む。
+# ここに書いた操作のキーだけが置き換わり、書いていない操作は ov の既定のまま
+# (既定のキーは `ov --help-key` で確かめられる)
+KeyBind:
+    # vi と同じく j / k で 1 行ずつ上下する。既定のキーも残す
+    down:
+        - "Enter"
+        - "Down"
+        - "ctrl+n"
+        - "j"
+    up:
+        - "Up"
+        - "ctrl+p"
+        - "k"
+    # 既定では j が jump_target なので、j を down に使うために alt+j へ移す
+    jump_target:
+        - "alt+j"
