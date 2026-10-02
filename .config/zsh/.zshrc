@@ -139,3 +139,6 @@ fi
 alias gcd='cd `ghq root`/`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :100 $(ghq root)/{}/README.*"`'
 
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+# .claude/worktrees/ 配下の worktree とプロジェクトルートを行き来する
+[ -f "$HOME/.config/shell/cdwt.sh" ] && . "$HOME/.config/shell/cdwt.sh"

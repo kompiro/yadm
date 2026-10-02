@@ -56,3 +56,6 @@ command -v direnv > /dev/null 2>&1 && eval "$(direnv hook bash)"
 # craete alias for cli tools
 alias k='kubectl'
 alias gcd='cd `ghq root`/`ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :100 $(ghq root)/{}/README.*"`'
+
+# .claude/worktrees/ 配下の worktree とプロジェクトルートを行き来する
+[ -f "${HOME}/.config/shell/cdwt.sh" ] && . "${HOME}/.config/shell/cdwt.sh"
