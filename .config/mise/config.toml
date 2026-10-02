@@ -25,3 +25,6 @@ terraform = "1.16.4"
 awscli = { version = "2.37.1", symlink_bins = "true" }
 eza = "0.23.5"
 task = "3.53.1"
+# git の diff 表示用 (設定は ~/.config/git/config)
+delta = "0.19.2"
+difftastic = "0.71.0"
