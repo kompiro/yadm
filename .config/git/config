@@ -10,6 +10,24 @@
   grep = auto
 [core]
   quotepath = false
+  # diff の表示は delta に任せる。mise で入れていない環境 (devcontainer など) では less に戻す
+  pager = "if command -v delta > /dev/null 2>&1; then delta; else less; fi"
+[interactive]
+  # `git add -p` の表示も delta で色付けする。行の対応を崩さないよう --color-only を使う
+  diffFilter = "if command -v delta > /dev/null 2>&1; then delta --color-only; else cat; fi"
+[delta]
+  navigate = true      # n / N で次 / 前のファイルに移動
+  line-numbers = true
+[diff]
+  # `git difftool` は difftastic (構文を見て比べる diff) を使う。
+  # diff.external に入れると `git add -p` や format-patch が壊れるので、使うときだけ呼ぶ
+  tool = difftastic
+[difftool]
+  prompt = false
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+  difftool = true
 [alias]
   st = status
   sh = show
@@ -48,6 +66,10 @@
   d4 = diff HEAD~~~~         # HEADから4つ前とdiff
   d5 = diff HEAD~~~~~        # HEADから5つ前とdiff
   d10 = diff HEAD~~~~~~~~~~  # HEADから10前とdiff
+  # difftastic でのdiff (インデントや改行だけの変更を無視して、構文の変化を見る)
+  dft = difftool                                   # git dft develop...HEAD
+  dlog = -c diff.external=difft log -p --ext-diff  # logをdifftasticで
+  dshow = -c diff.external=difft show --ext-diff   # showをdifftasticで
   # mergeの際にconflictが起きたファイルを編集
   edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
   # mergeの際にconflictが起きたファイルをadd
