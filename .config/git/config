@@ -18,6 +18,7 @@
 [delta]
   navigate = true      # n / N で次 / 前のファイルに移動
   line-numbers = true
+  side-by-side = true
 [diff]
   # `git difftool` は difftastic (構文を見て比べる diff) を使う。
   # diff.external に入れると `git add -p` や format-patch が壊れるので、使うときだけ呼ぶ
