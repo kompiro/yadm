@@ -27,3 +27,7 @@ vendor/bundle
 out/
 
 .terraform/*
+
+# 個人の開発環境専用の pre-push（lefthook）。front の main tree と各 worktree に置く
+lefthook-local.yml
+.husky/pre-push
