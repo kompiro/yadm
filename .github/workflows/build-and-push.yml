@@ -41,6 +41,9 @@ jobs:
         run: echo "REF_NAME=latest" >> $GITHUB_ENV
       - name: Pre-build dev container image
         uses: devcontainers/ci@v0.3
+        env:
+          # devcontainer.json の ${localEnv:GITHUB_TOKEN} 経由で yadm feature に渡り、mise install が使う
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           imageName: ghcr.io/${{ github.repository }}
           cacheFrom: ghcr.io/${{ github.repository }}

@@ -13,6 +13,11 @@
             "type": "string",
             "default": "main",
             "description": "Setup your yadm repository ref."
+        },
+        "githubToken": {
+            "type": "string",
+            "default": "",
+            "description": "GitHub token passed to mise as GITHUB_TOKEN. Without it, mise calls the GitHub API unauthenticated and hits the 60 requests/hour rate limit."
         }
     }
 }
