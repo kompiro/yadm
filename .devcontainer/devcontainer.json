@@ -6,7 +6,8 @@
     },
     "features": {
         "./local-features/yadm": {
-            "ref": "${localEnv:REF}"
+            "ref": "${localEnv:REF}",
+            "githubToken": "${localEnv:GITHUB_TOKEN}"
         }
     },
     "remoteUser": "vscode",
